@@ -20,8 +20,67 @@ public class bill {
 	 return con;
 	 }
 
+//Insert method
+public String insertBill(String bName, String bDate, String accNo,double prereading,double currentreading)
+	 {
+	 String output = "";
+	 double preReading;
+	 double currentReading;
+	 double bUnits;
+	 double bTotal;
+	 try
+	 {
+	 Connection con = connect();
+	 //assigned to variable
+	 preReading = prereading;
+	 currentReading = currentreading;
+	 //calculation
+	 bUnits = (currentReading-preReading);
+	 
+	// IF ELSE statement
+	 if(bUnits<=80) {
+		 bTotal = (bUnits*5)+300;
+	 }
+	 else {
+		 bTotal = (bUnits*12)+300;
+	 } 
+	 
+	 if (con == null)
+	 {return "Error while connecting to the database for inserting."; }
+	 // create a prepared statement
+	 String query = " insert into bills (`billID`,`bName`,`bDate`,`accNo`,`preReading`,`currentReading`,`bUnits`,`bTotal`)"
+	 + " values (?, ?, ?, ?, ?, ?, ?, ?)";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+	 // binding values
+	 preparedStmt.setInt(1, 0);
+	 preparedStmt.setString(2, bName);
+	 preparedStmt.setString(3, bDate);
+	 preparedStmt.setString(4, accNo);
+	 preparedStmt.setDouble(5, prereading);
+	 preparedStmt.setDouble(6, currentreading);
+	 preparedStmt.setDouble(7, bUnits);
+	 preparedStmt.setDouble(8, bTotal);
+
+	 
+
+	 // execute the statement
+	 preparedStmt.execute();
+	 con.close();
+	 output = "Inserted successfully";
+	 }
+	 catch (Exception e)
+	 {
+	 
+		 e.printStackTrace();
+		 output = "Error while inserting the item.";
+	 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 }
+
 	
-	public String readBills()
+//Read from the database	
+public String readBills()
 	 {
 	 String output = "";
 	 try

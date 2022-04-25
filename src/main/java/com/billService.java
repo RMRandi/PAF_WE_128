@@ -23,6 +23,19 @@ public class billService {
 		return itemObj.readBills(); 
 	 }
 
-	
+	//Insert
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertItem(@FormParam("bName") String bname,
+	 @FormParam("bDate") String bdate,
+	 @FormParam("accNo") String accno,
+	 @FormParam("preReading") double prereading,
+	 @FormParam("currentReading") double curreading)
+	{
+	 String output = itemObj.insertBill(bname, bdate, accno, prereading,curreading);
+	return output;
+	}	
 
 }
