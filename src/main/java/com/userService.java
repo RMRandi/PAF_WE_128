@@ -1,6 +1,6 @@
 package com;
 
-import model.User;
+import model.user;
 
 
 //For REST Service
@@ -23,9 +23,15 @@ public class UserService
 	@Path("/")
 	//@Produces(MediaType.TEXT_HTML)
 
+<<<<<<< Updated upstream
 	public String readUser()
 	{
 		return userObj.readUser();
+=======
+	public String readUsers()
+	{
+		return userObj.readUsers();
+>>>>>>> Stashed changes
 		
 	}
 	

@@ -16,7 +16,7 @@ private Connection connect()
  {e.printStackTrace();}
  return con;
  }
-public String insertItem(String number, String name, String address, String phone, String email)
+public String insertUser(String number, String name, String address, String phone, String email)
  {
  String output = "";
  try
@@ -43,12 +43,12 @@ public String insertItem(String number, String name, String address, String phon
  catch (Exception e)
  {
 	 e.printStackTrace();
- output = "Error while inserting the item.";
+ output = "Error while inserting the user.";
  System.err.println(e.getMessage());
  }
  return output;
  }
-public String readItems()
+public String readUsers()
  {
  String output = "";
  try
@@ -83,8 +83,8 @@ public String readItems()
  output += "<td>" + email + "</td>";
  // buttons
  output += "<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'></td>"
- + "<td><form method='post' action='items.jsp'>" + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
- + "<input name='itemID' type='hidden' value='" + userID
+ + "<td><form method='post' action='users.jsp'>" + "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
+ + "<input name='userID' type='hidden' value='" + userID
  + "'>" + "</form></td></tr>";
  }
  con.close();
@@ -93,12 +93,12 @@ public String readItems()
  }
  catch (Exception e)
  {
- output = "Error while reading the items.";
+ output = "Error while reading the users.";
  System.err.println(e.getMessage());
  }
  return output;
  }
-public String updateItem(String ID, String userNumber, String name, String address, String phoneNumber, String email)
+public String updateUser(String ID, String userNumber, String name, String address, String phoneNumber, String email)
 {
 	 String output = "";
 	 try
@@ -123,12 +123,12 @@ public String updateItem(String ID, String userNumber, String name, String addre
 	 }
 	 catch (Exception e)
 	 {
-	 output = "Error while updating the item.";
+	 output = "Error while updating the user.";
 	 System.err.println(e.getMessage());
 	 }
 	 return output;
 	 }
-	public String deleteItem(String userID)
+	public String deleteUser(String userID)
 	 {
 	 String output = "";
 	 try
@@ -149,7 +149,7 @@ public String updateItem(String ID, String userNumber, String name, String addre
 	 catch (Exception e)
 	 {
 		 e.printStackTrace();
-	 output = "Error while deleting the item.";
+	 output = "Error while deleting the user.";
 	 System.err.println(e.getMessage());
 	 }
 	 return output;
