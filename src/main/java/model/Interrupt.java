@@ -17,6 +17,38 @@ public class Interrupt {
 	 return con;
 	 }
 	
+	public String insertInterrupt(String idate, String isub, String idesc)
+	 {
+		String output = "";
+		try{
+			Connection con = connect();
+			if (con == null){
+				return "Error while connecting to the database for inserting.";
+				}
+			
+			
+	 // create a prepared statement
+	 String query = " insert into interrupt(`interruptID`,`interruptDate`,`interruptSubject`,`interruptDesc`)" 
+	 + " values (?, ?, ?, ?)";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+	 
+	 // binding values
+	 preparedStmt.setInt(1, 0);
+	 preparedStmt.setString(2, idate);
+	 preparedStmt.setString(3, isub);
+	 preparedStmt.setString(4, idesc);
+	 
+	 // execute the statement
+	 preparedStmt.execute();
+	 con.close();
+	 output = "Inserted successfully";}catch (Exception e){
+		 	e.printStackTrace();
+		 	//
+		 	output = "Error while inserting the item.";
+		 	System.err.println(e.getMessage());
+	 		}return output;
+	 }
+	
 	
 	
 	
@@ -70,5 +102,66 @@ public class Interrupt {
 		return output;
 	}
 	
+//	UPDATE
+	public String updateItem(String ID, String date, String sub, String desc){
+		
+		String output = "";
+		
+		try{
+			Connection con = connect();
+			if (con == null){
+				return "Error while connecting to the database for updating.";
+		}
+			
+	 
+	 // create a prepared statement
+	 String query = "UPDATE interrupt SET interruptDate=?,interruptSubject=?,interruptDesc=? WHERE interruptID=?";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+	 
+	 // binding values
+	 preparedStmt.setString(1, date);
+	 preparedStmt.setString(2, sub);
+	 preparedStmt.setString(3, desc);
+	 preparedStmt.setInt(4, Integer.parseInt(ID));
+	 
+	 // execute the statement
+	 preparedStmt.execute();
+	 
+	 con.close();
+	 output = "Updated successfully";
+	 }catch (Exception e){
+	 output = "Error while updating the item.";
+	 System.err.println(e.getMessage());
+	 	}
+	 return output;
+	 }
+	
+	
+	
+	public String deleteInterrupt(String itemID){
+		String output = "";
+		try{
+			Connection con = connect();
+			if (con == null){
+				return "Error while connecting to the database for deleting.";
+				}
+			
+	 // create a prepared statement
+	 String query = "delete from items where itemID=?";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+
+	 // binding values
+	 preparedStmt.setInt(1, Integer.parseInt(itemID));
+	 
+	 // execute the statement
+	 preparedStmt.execute();
+	 con.close();
+	 output = "Deleted successfully";
+	 }catch (Exception e){
+		 output = "Error while deleting the item.";
+		 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 }
 	
 }
