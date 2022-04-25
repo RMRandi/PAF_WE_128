@@ -98,5 +98,60 @@ public String readItems()
  }
  return output;
  }
-
+public String updateItem(String ID, String userNumber, String name, String address, String phoneNumber, String email)
+{
+	 String output = "";
+	 try
+	 {
+	 Connection con = connect();
+	 if (con == null)
+	 {return "Error while connecting to the database for updating."; }
+	 // create a prepared statement
+	 String query = "UPDATE user SET userNumber=?,name=?,address=?,phoneNumber=?,email=? WHERE userID=?";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+	 // binding values
+	 preparedStmt.setString(1, userNumber);
+	 preparedStmt.setString(2, name);
+	 preparedStmt.setString(3, address);
+	 preparedStmt.setString(4, phoneNumber);
+	 preparedStmt.setString(5, email);
+	 preparedStmt.setInt(6, Integer.parseInt(ID));
+	 // execute the statement
+	 preparedStmt.execute();
+	 con.close();
+	 output = "Updated successfully";
+	 }
+	 catch (Exception e)
+	 {
+	 output = "Error while updating the item.";
+	 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 }
+	public String deleteItem(String userID)
+	 {
+	 String output = "";
+	 try
+	 {
+	 Connection con = connect();
+	 if (con == null)
+	 {return "Error while connecting to the database for deleting."; }
+	 // create a prepared statement
+	 String query = "delete from user where userID=?";
+	 PreparedStatement preparedStmt = con.prepareStatement(query);
+	 // binding values
+	 preparedStmt.setInt(1, Integer.parseInt(userID));
+	 // execute the statement
+	 preparedStmt.execute();
+	 con.close();
+	 output = "Deleted successfully";
+	 }
+	 catch (Exception e)
+	 {
+		 e.printStackTrace();
+	 output = "Error while deleting the item.";
+	 System.err.println(e.getMessage());
+	 }
+	 return output;
+	 }
 	}
