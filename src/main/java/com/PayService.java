@@ -25,4 +25,21 @@ Pay p = new Pay();
 	}
 	
 	
+@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertPayment(@FormParam("fullName")String fullName,
+								@FormParam("NIC")String NIC,
+								@FormParam("amount")String amount,
+								@FormParam("date")String date,
+								@FormParam("bankName")String bankName,
+								@FormParam("debitCard")String debitCard,
+								@FormParam("otpNumber")String otpNumber)
+{
+	String output = p.insertPayment(fullName,NIC,amount,date,bankName,debitCard,otpNumber);
+	return output;
+}
+
+
 }
