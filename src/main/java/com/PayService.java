@@ -40,6 +40,24 @@ Pay p = new Pay();
 	String output = p.insertPayment(fullName,NIC,amount,date,bankName,debitCard,otpNumber);
 	return output;
 }
-
+@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updatePayment(String paymentData)
+	{
+		JsonObject paymentObject = new JsonParser().parse(paymentData).getAsJsonObject();
+		String payID = paymentObject.get("payID").getAsString();
+		String fullName = paymentObject.get("fullName").getAsString();
+		String NIC = paymentObject.get("NIC").getAsString();
+		String amount = paymentObject.get("amount").getAsString();
+		String date = paymentObject.get("date").getAsString();
+		String bankName = paymentObject.get("bankName").getAsString();
+		String debitCard = paymentObject.get("debitCard").getAsString();
+		String otpNumber = paymentObject.get("otpNumber").getAsString();
+		
+		String output = p.updatePayment(payID,fullName,NIC,amount,date,bankName,debitCard,otpNumber);
+		return output;
+	}
 
 }

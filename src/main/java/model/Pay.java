@@ -113,6 +113,36 @@ public String insertPayment(String fullName, String NIC, String amount, String d
 		return output;
 	}
 	
+public String updatePayment(String payID, String fullName, String NIC, String amount, String date, String bankName, String debitCard, String otpNumber) {
+		String output ="";
+		try {
+			Connection con = connect();
+			if(con == null) {
+				return "can not connect to the database";
+			}
+			String query ="update payment set fullName=?,NIC=?,amount=?,date=?,bankName=?,debitCard=?,otpNumber=? where payID=?";
+			PreparedStatement ps = con.prepareStatement(query);
+			
+			ps.setString(1, fullName);
+			ps.setString(2, NIC);
+			ps.setString(3, amount);
+			ps.setString(4, date);
+			ps.setString(5, bankName);
+			ps.setString(6, debitCard);
+			ps.setString(7, otpNumber);
+			ps.setInt(8, Integer.parseInt(payID));
+			
+			ps.execute();
+			con.close();
+			
+			output ="Updated successfully";
+		}
+		catch(Exception e) {
+			output="update fail";
+			e.printStackTrace();
+		}
+		return output;
+	}
 	
 
 }
