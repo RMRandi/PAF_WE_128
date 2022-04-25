@@ -15,17 +15,17 @@ import org.jsoup.*;
 import org.jsoup.parser.*;
 import org.jsoup.nodes.Document;
 
-@Path("/Item")
-public class ItemService
+@Path("/User")
+public class UserService
 {
-	Item itemObj = new Item();
+	User userObj = new User();
 	@GET
 	@Path("/")
 	//@Produces(MediaType.TEXT_HTML)
 
-	public String readItems()
+	public String readUser()
 	{
-		return itemObj.readItems();
+		return userObj.readUser();
 		
 	}
 	
@@ -33,13 +33,13 @@ public class ItemService
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertItem(@FormParam("userNumber") String userNumber,
+	public String insertUser(@FormParam("userNumber") String userNumber,
 	 @FormParam("name") String name,
 	 @FormParam("address") String address,
 	 @FormParam("phoneNumber") String phoneNumber,
 	 @FormParam("email") String email)
 	{
-	 String output = itemObj.insertItem(userNumber, name, address, phoneNumber, email);
+	 String output = userObj.insertUser(userNumber, name, address, phoneNumber, email);
 	return output;
 	}
 	
@@ -47,18 +47,18 @@ public class ItemService
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateItem(String itemData)
+	public String updateUser(String userData)
 	{
 	//Convert the input string to a JSON object
-	 JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
+	 JsonObject userObject = new JsonParser().parse(userData).getAsJsonObject();
 	//Read the values from the JSON object
-	 String userID = itemObject.get("userID").getAsString();
-	 String userNumber = itemObject.get("userNumber").getAsString();
-	 String name = itemObject.get("name").getAsString();
-	 String address = itemObject.get("address").getAsString();
-	 String phoneNumber = itemObject.get("phoneNumber").getAsString();
-	 String email = itemObject.get("email").getAsString();
-	 String output = itemObj.updateItem(userID, userNumber, name, address, phoneNumber, email);
+	 String userID = userObject.get("userID").getAsString();
+	 String userNumber = userObject.get("userNumber").getAsString();
+	 String name = userObject.get("name").getAsString();
+	 String address = userObject.get("address").getAsString();
+	 String phoneNumber = userObject.get("phoneNumber").getAsString();
+	 String email = userObject.get("email").getAsString();
+	 String output = userObj.updateUser(userID, userNumber, name, address, phoneNumber, email);
 	return output;
 	}
 	
@@ -66,14 +66,14 @@ public class ItemService
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_XML)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteItem(String itemData)
+	public String deleteUser(String userData)
 	{
 	//Convert the input string to an XML document
-	 Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+	 Document doc = Jsoup.parse(userData, "", Parser.xmlParser());
 
-	//Read the value from the element <itemID>
+	//Read the value from the element <userID>
 	 String userID = doc.select("userID").text();
-	 String output = itemObj.deleteItem(userID);
+	 String output = userObj.deleteUser(userID);
 	return output;
 	}
 }
