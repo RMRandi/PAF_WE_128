@@ -40,7 +40,7 @@ Pay p = new Pay();
 	String output = p.insertPayment(fullName,NIC,amount,date,bankName,debitCard,otpNumber);
 	return output;
 }
-@PUT
+	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
@@ -57,6 +57,19 @@ Pay p = new Pay();
 		String otpNumber = paymentObject.get("otpNumber").getAsString();
 		
 		String output = p.updatePayment(payID,fullName,NIC,amount,date,bankName,debitCard,otpNumber);
+		return output;
+	}
+	@DELETE
+	@Path("/") 
+	@Consumes(MediaType.APPLICATION_XML) 
+	@Produces(MediaType.TEXT_PLAIN) 
+	public String deletePayment(String paymentData)
+	{
+		//convert input string => xml document
+		Document doc = Jsoup.parse(paymentData, "", Parser.xmlParser());
+		//read the value from the element
+		String payID = doc.select("payID").text();
+		String output =p.deletePayment(payID);
 		return output;
 	}
 
