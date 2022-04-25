@@ -1,0 +1,81 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Pay {
+	private Connection connect()
+	{
+		Connection con = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			//provide user-name and password
+			con = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/electrogriddb","root","");
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return con;	}
+	
+
+	public String readPayment() {
+		String output="";
+		try {
+			Connection con = connect();
+			if(con == null) {
+				return "can not read";
+			}
+			output ="<table border='1'>"+
+					"<tr><th>PayID</th><th>Full Name</th>"+
+					"<th>NIC</th><th>Amount</th>"+
+					"<th>Date</th><th>Bank Name</th>"+
+					"<th>Debit Card</th><th>OTP</th></tr>";
+			String query ="select * from payment";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			
+			while(rs.next()) {
+				String payID = Integer.toString(rs.getInt("payID"));
+				String fullName = rs.getString("fullName");
+				String NIC = rs.getString("NIC");
+				String amount = rs.getString("amount");
+				String date = rs.getString("date");
+				String bankName = rs.getString("bankName");
+				String debitCard = rs.getString("debitCard");
+				String otpNumber = rs.getString("otpNumber");
+			
+				//add values to html table
+				output +="<tr><td>"+payID+"</td>";
+				output +="<td>"+fullName+"</td>";
+				output +="<td>"+NIC+"</td>";
+				output +="<td>"+amount+"</td>";
+				output +="<td>"+date+"</td>";
+				output +="<td>"+bankName+"</td>";
+				output +="<td>"+debitCard+"</td>";
+				output +="<td>"+otpNumber+"</td>";
+				
+				//buttons
+				output +="<td><input name='btnUpdate' type='button' value='Update' class='btn btn-secondary'</td>"
+						+ "<td><form method='post' action='payment.jsp'>"
+						+"<input name='btnRemove' type='button' value='Remove' class='btn btn-danger'>"
+						+ "<input name='payID' type='hidden' value='"+payID 
+						+"'>" + "</form></td></tr>";
+			}
+			con.close();
+			//close html table
+			output +="</table>";
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			output ="can not read please check your error.";
+		}
+		return output;
+	}
+	
+	
+
+}
