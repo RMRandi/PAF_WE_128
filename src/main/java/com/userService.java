@@ -15,7 +15,7 @@ import org.jsoup.*;
 import org.jsoup.parser.*;
 import org.jsoup.nodes.Document;
 
-@Path("/User")
+@Path("/Item")
 public class ItemService
 {
 	Item itemObj = new Item();
@@ -43,5 +43,37 @@ public class ItemService
 	return output;
 	}
 	
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateItem(String itemData)
+	{
+	//Convert the input string to a JSON object
+	 JsonObject itemObject = new JsonParser().parse(itemData).getAsJsonObject();
+	//Read the values from the JSON object
+	 String userID = itemObject.get("userID").getAsString();
+	 String userNumber = itemObject.get("userNumber").getAsString();
+	 String name = itemObject.get("name").getAsString();
+	 String address = itemObject.get("address").getAsString();
+	 String phoneNumber = itemObject.get("phoneNumber").getAsString();
+	 String email = itemObject.get("email").getAsString();
+	 String output = itemObj.updateItem(userID, userNumber, name, address, phoneNumber, email);
+	return output;
+	}
 	
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteItem(String itemData)
+	{
+	//Convert the input string to an XML document
+	 Document doc = Jsoup.parse(itemData, "", Parser.xmlParser());
+
+	//Read the value from the element <itemID>
+	 String userID = doc.select("userID").text();
+	 String output = itemObj.deleteItem(userID);
+	return output;
+	}
 }
