@@ -141,5 +141,58 @@ public String readBills()
 	 return output;
 	 }
 
+//Update
+public String updateBill(String ID, String bName, String bDate, String accNo, String prereading, String curreading)
+	{
+		String output = "";
+		 try
+		 {
+			 //assigned to variables 
+			 Double preReading = Double.parseDouble(prereading);
+			 Double currentReading = Double.parseDouble(curreading);
+			 //Calculation
+			 Double bUnits = (currentReading-preReading);
+			 Double bTotal = null;
+			 
+			 //IF ELSE statement
+			 if(bUnits<=80) {
+				 bTotal = (bUnits*5)+300;
+			 }
+			 else {
+				 bTotal = (bUnits*12)+300;
+			 }
+			 
+		 Connection con = connect();
+		 if (con == null)
+		 {return "Error while connecting to the database for updating."; }
+		 // create a prepared statement
+		 String query = "UPDATE bills SET bName=?,bDate=?,accNo=?,preReading=?,currentReading=?,bUnits=?,bTotal=?  WHERE billID=?";
+		 PreparedStatement preparedStmt = con.prepareStatement(query);
+		 // binding values
+		 preparedStmt.setString(1, bName);
+		 preparedStmt.setString(2, bDate);
+		 preparedStmt.setString(3, accNo);
+		 preparedStmt.setDouble(4, Double.parseDouble(prereading));
+		 preparedStmt.setDouble(5, Double.parseDouble(curreading));
+		 preparedStmt.setDouble(6, bUnits);
+		 preparedStmt.setDouble(7, bTotal);
+		  preparedStmt.setInt(8, Integer.parseInt(ID));
+		 
+		
+		 // execute the statement
+		 preparedStmt.execute();
+		 con.close();
+		 output = "Updated successfully";
+		 }
+		 catch (Exception e)
+		 {
+			 e.printStackTrace();
+		 output = "Error while updating the item.";
+		 System.err.println(e.getMessage());
+		 }
+		 return output;
+		 }
+		
+
 	
 }
