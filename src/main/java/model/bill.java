@@ -38,11 +38,11 @@ public String insertBill(String bName, String bDate, String accNo,double preread
 	 bUnits = (currentReading-preReading);
 	 
 	// IF ELSE statement
-	 if(bUnits<=80) {
-		 bTotal = (bUnits*5)+300;
+	 if(bUnits<=120) {
+		 bTotal = (bUnits*10)+450;
 	 }
 	 else {
-		 bTotal = (bUnits*12)+300;
+		 bTotal = (bUnits*15)+450;
 	 } 
 	 
 	 if (con == null)
@@ -89,7 +89,7 @@ public String readBills()
 	 if (con == null)
 	 {return "Error while connecting to the database for reading."; }
 	 // Prepare the html table to be displayed
-	 output = "<table  border='1' ><tr style='background-color:#b30000;color:white;font-size:20px'><th>Bill ID</th>"
+	 output = "<table  border='1' ><tr><th>Bill ID</th>"
 				+"<th>Name</th>"
 				+ "<th>Date</th>"
 				+"<th>Account Number</th>"
@@ -115,7 +115,7 @@ public String readBills()
 		 String bUnits = Double.toString(rs.getDouble("bUnits"));
 		 String bTotal = Double.toString(rs.getDouble("bTotal"));
 	 // Add into the html table
-		 output += "<tr style='background-color:#ffe6e6;color:black;font-size:18px'><td>" + billID + "</td>";
+		 output += "<tr><td>" + billID + "</td>";
 		 output += "<td>" + bName + "</td>";
 		 output += "<td>" + bDate + "</td>";
 		 output += "<td>" + accNo + "</td>";
@@ -125,8 +125,8 @@ public String readBills()
 		 output += "<td>" + bTotal + "</td>";
 	 // buttons
 	 output += "<td><input name='btnUpdate' type='button' value='Update'class='btn btn-secondary'></td>"
-	 + "<td><form method='post' action='items.jsp'>"+"<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
-	 + "<input name='itemID' type='hidden' value='" + billID
+	 + "<td><form method='post' action='bill.jsp'>"+"<input name='btnRemove' type='submit' value='Remove'class='btn btn-danger'>"
+	 + "<input name='billID' type='hidden' value='" + billID
 	 + "'>" + "</form></td></tr>";
 	 }
 	 con.close();
