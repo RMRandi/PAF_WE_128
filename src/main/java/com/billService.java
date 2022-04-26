@@ -14,16 +14,15 @@ import org.jsoup.nodes.Document;
 
 public class billService {
 	
-	bill itemObj = new bill();
+	bill biiObj = new bill();
 	@GET
 	@Path("/")
 	@Produces(MediaType.TEXT_HTML)
 	public String readItems()
 	 {
-		return itemObj.readBills(); 
+		return biiObj.readBills(); 
 	 }
 
-	//Insert
 	@POST
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -34,28 +33,28 @@ public class billService {
 	 @FormParam("preReading") double prereading,
 	 @FormParam("currentReading") double curreading)
 	{
-	 String output = itemObj.insertBill(bname, bdate, accno, prereading,curreading);
-	return output;
+		String output = biiObj.insertBill(bname, bdate, accno, prereading,curreading);
+		return output;
 	}
 
-//update part
+	//update part
 	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String updateBill(String billData)
 	{
-	//Convert the input string to a JSON object
-	 JsonObject itemObject = new JsonParser().parse(billData).getAsJsonObject();
-	//Read the values from the JSON object
-	 String billID = itemObject.get("billID").getAsString();
-	 String bName = itemObject.get("bName").getAsString();
-	 String bDate = itemObject.get("bDate").getAsString();
-	 String accNo = itemObject.get("accNo").getAsString();
-	 String preReading = itemObject.get("preReading").getAsString();
-	 String currentReading = itemObject.get("currentReading").getAsString();
-	 String output = itemObj.updateBill(billID, bName, bDate, accNo, preReading,currentReading);
-	return output;
+		//Convert the input string to a JSON object
+		 JsonObject billObject = new JsonParser().parse(billData).getAsJsonObject();
+		//Read the values from the JSON object
+		 String billID = billObject.get("billID").getAsString();
+		 String bName = billObject.get("bName").getAsString();
+		 String bDate = billObject.get("bDate").getAsString();
+		 String accNo = billObject.get("accNo").getAsString();
+		 String preReading = billObject.get("preReading").getAsString();
+		 String currentReading = billObject.get("currentReading").getAsString();
+		 String output = biiObj.updateBill(billID, bName, bDate, accNo, preReading,currentReading);
+		return output;
 	}
 
 	@DELETE
@@ -64,13 +63,13 @@ public class billService {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String deleteBill(String billData)
 	{
-	//Convert the input string to an XML document
-	 Document doc = Jsoup.parse(billData, "", Parser.xmlParser());
-
-	//Read the value from the element <itemID>
-	 String billID = doc.select("billID").text();
-	 String output = itemObj.deleteBill(billID);
-	return output;
-	}	
+		//Convert the input string to an XML document
+		 Document doc = Jsoup.parse(billData, "", Parser.xmlParser());
+	
+		//Read the value from the element <itemID>
+		 String billID = doc.select("billID").text();
+		 String output = biiObj.deleteBill(billID);
+		return output;
+	}
 
 }
