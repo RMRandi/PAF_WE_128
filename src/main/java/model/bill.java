@@ -71,7 +71,7 @@ public class bill {
 	 		{
 	 
 	 			e.printStackTrace();
-	 			output = "Error while inserting the item.";
+	 			output = "Error while inserting the bill record.";
 	 			System.err.println(e.getMessage());
 	 		}
 	 	return output;
@@ -133,7 +133,7 @@ public class bill {
 		}
 		catch (Exception e)
 			{
-				output = "Error while reading the items.";
+				output = "Error while reading the bill records.";
 				System.err.println(e.getMessage());
 			}
 		return output;
@@ -185,7 +185,7 @@ public class bill {
 		 		catch (Exception e)
 		 		{
 		 			e.printStackTrace();
-		 			output = "Error while updating the item.";
+		 			output = "Error while updating the bill record.";
 		 			System.err.println(e.getMessage());
 		 		}
 		 	return output;
@@ -196,25 +196,25 @@ public class bill {
 		 {
 		 	String output = "";
 		 	try
-		 	{
+		 {
 		 		Connection con = connect();
 		 		if (con == null)
 		 		{return "Error while connecting to the database for deleting."; }
 		 		// create a prepared statement
-				String query = "delete from bills where billID=?";
-				PreparedStatement preparedStmt = con.prepareStatement(query);
-				// binding values
-				preparedStmt.setInt(1, Integer.parseInt(billID));
-				// execute the statement
-				preparedStmt.execute();
-				con.close();
-				output = "Deleted successfully";
+			String query = "delete from bills where billID=?";
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(billID));
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			output = "Deleted successfully";
+		 }
+		 	catch (Exception e)
+		 	{
+		 		output = "Error while deleting the bill record.";
+		 		System.err.println(e.getMessage());
 		 	}
-		 		catch (Exception e)
-		 		{
-		 			output = "Error while deleting the item.";
-		 			System.err.println(e.getMessage());
-		 		}
 		 	return output;
 		 }
 
